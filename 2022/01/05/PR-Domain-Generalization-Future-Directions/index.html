@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <meta name="description" content="最近在研究领域泛化，想找个方向做点东西，于是整理了最近看的一篇综述Domain Generalization in Vision: A Survey[1]，希望能从中有所收获。 发展方向作者从三个方面进行了总结：模型结构、学习方法和评价基准（Benchmark）。 模型结构动态结构（Dynamic Architectures）在源域训练好后，神经网络的参数通常就固定了下来，充当一个特征提取器，直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Paper Reading) Future Research Directions on Domain Generalization">
+<meta property="og:url" content="http://example.com/2022/01/05/PR-Domain-Generalization-Future-Directions/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近在研究领域泛化，想找个方向做点东西，于是整理了最近看的一篇综述Domain Generalization in Vision: A Survey[1]，希望能从中有所收获。 发展方向作者从三个方面进行了总结：模型结构、学习方法和评价基准（Benchmark）。 模型结构动态结构（Dynamic Architectures）在源域训练好后，神经网络的参数通常就固定了下来，充当一个特征提取器，直接">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-05T06:50:54.000Z">
+<meta property="article:modified_time" content="2022-01-06T14:36:22.876Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="paper">
+<meta name="twitter:card" content="summary_large_image">
+  
+  <title>(Paper Reading) Future Research Directions on Domain Generalization - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.12","typing":{"enable":true,"typeSpeed":100,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname"}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MoonJian&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/daily/">
+                <i class="iconfont icon-daily-fill"></i>
+                每日一得
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/books">
+                <i class="iconfont icon-books-fill"></i>
+                阅读
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/movies">
+                <i class="iconfont icon-movies-fill"></i>
+                电影
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="(Paper Reading) Future Research Directions on Domain Generalization">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-05 14:50" pubdate>
+        January 5, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">(Paper Reading) Future Research Directions on Domain Generalization</h1>
+            
+            <div class="markdown-body">
+              <p>最近在研究领域泛化，想找个方向做点东西，于是整理了最近看的一篇综述<em>Domain Generalization in Vision: A Survey</em><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="Domain Generalization in Vision: A Survey
+">[1]</span></a></sup>，希望能从中有所收获。</p>
+<h1 id="发展方向"><a href="#发展方向" class="headerlink" title="发展方向"></a>发展方向</h1><p>作者从三个方面进行了总结：<strong>模型结构</strong>、<strong>学习方法</strong>和<strong>评价基准（Benchmark）</strong>。</p>
+<h2 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h2><h3 id="动态结构（Dynamic-Architectures）"><a href="#动态结构（Dynamic-Architectures）" class="headerlink" title="动态结构（Dynamic Architectures）"></a>动态结构（Dynamic Architectures）</h3><p>在源域训练好后，神经网络的参数通常就固定了下来，充当一个特征提取器，直接应用在目标域中。但是目标域的数据分布可能会和源域差异很大，参数固定的特征提取器可能提取不到有效的特征。针对这个问题，一种可能的解决思路是构建动态神经网络（Dynamical Neural Networks），让网络的结构和权重与输入数据挂钩。</p>
+<blockquote>
+<p>这是我很感兴趣的一个方向，让动态变化的网络结构处理动态变化的数据分布。在领域泛化问题中，就是处理领域的变化， Domain Shift，更进一步，甚至可以用于处理持续领域泛化（Continuous Domain Generalization）问题。但难点在于：1. 选用怎样的动态网络结构？2. 如何处理领域泛化目标域中的无标记数据？3. 如何利用无标记数据动态改变网络结构？4. 是网络结构整体动态变化还是部分动态变化？</p>
+</blockquote>
+<h3 id="自适应归一化层（Adaptive-Normalization-Layers）"><a href="#自适应归一化层（Adaptive-Normalization-Layers）" class="headerlink" title="自适应归一化层（Adaptive Normalization Layers）"></a>自适应归一化层（Adaptive Normalization Layers）</h3><p>自适应归一化层动态改变网络权重（准确地说，是CNN中BN层的权重），不改变网络结构。神经网络BN层可以表示为：</p>
+<script type="math/tex; mode=display">
+y = \gamma \frac{x-\mu}{\delta} + \beta</script><p>其中，$(\gamma,\beta)$是可学习的参数，$(\mu,\delta)$是训练集上的移动平均和移动标准差，这些参数都和训练数据的分布有关。如何让归一化层的参数自适应目标域中的数据分布，是一个可能的方向。</p>
+<blockquote>
+<p>相比动态结构方法，自适应归一化层方法更加简洁，但是目前已有一篇相关的工作了<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="Tent: Fully Test-Time Adaptation by Entropy Minimization
+">[2]</span></a></sup></p>
+</blockquote>
+<h2 id="学习方法"><a href="#学习方法" class="headerlink" title="学习方法"></a>学习方法</h2><p>这一部分可以挖的坑是最多的，当然，也是最卷的（笑~</p>
+<h3 id="无领域标签学习（Learning-without-Domain-Labels）"><a href="#无领域标签学习（Learning-without-Domain-Labels）" class="headerlink" title="无领域标签学习（Learning without Domain Labels）"></a>无领域标签学习（Learning without Domain Labels）</h3><p>当前的大多数领域泛化方法在训练时需要知道不同域的领域标签，即域是事先划分好的，域与域之间的界限很明确。但是在现实场景中，域的标签是很难获得和定义的。这个时候，虽然我们有很多标记好的数据，但是却不知道这些数据可以被划分到哪些域中。在这种设定下，当前的SOTA方法很难直接应用。虽然目前已有了一些工作，但是仍不尽如人意。</p>
+<blockquote>
+<p>一开始我并不很清楚这个设定是否有意义，因为这相当于learning in the wild（虽然有标签，但没有域信息），如何定义Target Domain？可能需要再看下综述中提到的几篇论文。</p>
+</blockquote>
+<h3 id="新域数据生成（Learning-to-Synthesize-Novel-Domains）"><a href="#新域数据生成（Learning-to-Synthesize-Novel-Domains）" class="headerlink" title="新域数据生成（Learning to Synthesize Novel Domains）"></a>新域数据生成（Learning to Synthesize Novel Domains）</h3><p>与Out-of-distribution(OOD) Generalization相关的研究<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks
+">[3]</span></a></sup>表明，增加域的多样性有利于提高OOD检测的泛化性。但是，域是无穷无尽的，不可能收集到所有的域数据。因此，学会如何生成新域数据是一个可能的方向。</p>
+<blockquote>
+<p>这个方向已经有不少工作了，但是问题的实质并没有得到解决，依靠增加训练集的多样性来提高泛化能力，在我看来，成本还是太高，not my taste~</p>
+</blockquote>
+<h3 id="避免学习捷径（Avoiding-Learning-Shortcut）"><a href="#避免学习捷径（Avoiding-Learning-Shortcut）" class="headerlink" title="避免学习捷径（Avoiding Learning Shortcut）"></a>避免学习捷径（Avoiding Learning Shortcut）</h3><p>捷径学习（Shortcut Learning）指的是神经网络偏好学习简单的特征，这些简单特征能在训练集上表现得很好，但很难学到与任务相关的特征<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="Shortcut Learning in Deep Neural Networks
+">[4]</span></a></sup>，从而影响泛化性。例如，区分不同颜色的数字时，神经网络可能更多地学到颜色相关的特征，而不是形状和轮廓相关的特征。这是一种bias，理所当然地会影响泛化性。在领域泛化中，每个域都有自己特定的bias，如果神经网络只学到了每个类的bias，那么泛化性能绝对大打折扣！</p>
+<blockquote>
+<p>初看是一个新颖的角度，但细想，这不就是解决领域泛化中常谈的domain-specific bias问题吗？不过后来再仔细想了下，这里的bias可能比较特殊，是能够引发shortcut learning的bias，是与任务无关但却造成影响的bias，和那些数据不平衡之类的bias有点不同。我对这个方向还是很感兴趣的，得看下文献中是如何定义shortcut的~</p>
+</blockquote>
+<h3 id="因果表征学习（Causal-Representation-Learning）"><a href="#因果表征学习（Causal-Representation-Learning）" class="headerlink" title="因果表征学习（Causal Representation Learning）"></a>因果表征学习（Causal Representation Learning）</h3><blockquote>
+<p>因果推断+表示学习 我赌五毛钱，绝对是未来蓬勃发展的方向，是迈向下一波人工智能浪潮的关键（这里佩服周Sir的眼光！）</p>
+</blockquote>
+<p>当前主流的表示学习方法是为了学到数据$X$到标签$Y$的一个映射$P(Y|X)$，但是这样学得的表示难以处理OOD的数据。一种可能的解决方法是通过生成模型，如autoencoder，直接建模$P(X,Y)$，这可能会提高鲁棒性和泛化性。</p>
+<blockquote>
+<p>表示学习相关的内容是好学的，但因果推断涉及的东西很多，很深，虽然这是一个很好的方向，但本人太菜了，在基础没有打牢之前，我是绝对不会碰的~</p>
+</blockquote>
+<h3 id="利用辅助信息（Exploiting-Side-Information）"><a href="#利用辅助信息（Exploiting-Side-Information）" class="headerlink" title="利用辅助信息（Exploiting Side Information）"></a>利用辅助信息（Exploiting Side Information）</h3><p>辅助信息可以理解为一些有用的场外因素，比如物体检测，大部分人用的是RGB信息，但如果能够得到图像的深度信息RGB-D，那么将提高检测的准确率。在领域泛化中，近期有些工作挖掘了数据的属性信息，比如颜色、形状、条纹等，<strong>这些属性信息是通用的，与domain-specific bias无关</strong>！在zero-shot learning中，挖掘属性信息已经成为了检测新类的一种常用方法。</p>
+<blockquote>
+<p>看完后有一个问题：如何确保利用到的辅助信息与domain-specific bias无关？就算很通用的属性，比如颜色，也要分场景吧？进一步，如果要保证辅助信息的通用性，那么前深度学习时代运用的特征比如HoG是否可以有用武之地？</p>
+</blockquote>
+<h3 id="迁移学习（Transfer-Learning）"><a href="#迁移学习（Transfer-Learning）" class="headerlink" title="迁移学习（Transfer Learning）"></a>迁移学习（Transfer Learning）</h3><p>这里的迁移学习特指Synthetic-to-real场景下的迁移学习，即从真实数据集上训练好的模型，要能够迁移到下游合成的数据上，同时，要能够依然保持真实数据集上学到的知识，说白了，就是持续学习（Continual Learning）。</p>
+<blockquote>
+<p>没搞懂这个场景和持续学习的区别所在，以及它为啥是一个realistic and practical的设定？不过yysy，之前搞过一段时间的持续学习，说不定可以挖坑（笑~</p>
+</blockquote>
+<h3 id="半监督领域泛化（Semi-Supervised-Domain-Generalization）"><a href="#半监督领域泛化（Semi-Supervised-Domain-Generalization）" class="headerlink" title="半监督领域泛化（Semi-Supervised Domain Generalization）"></a>半监督领域泛化（Semi-Supervised Domain Generalization）</h3><p>经典A+B</p>
+<blockquote>
+<p>不说了，看名字都猜得到干啥，很卷的一个方向</p>
+</blockquote>
+<h3 id="开放域泛化（Open-Domain-Generalization）"><a href="#开放域泛化（Open-Domain-Generalization）" class="headerlink" title="开放域泛化（Open Domain Generalization）"></a>开放域泛化（Open Domain Generalization）</h3><p>可以认为是一种新的设定，源域是异质的，即域与域之间不仅数据分布不同，而且含有不同的标记空间，针对目标域，模型要能够识别出见过的类别，并且检测出没有见过的类别。</p>
+<blockquote>
+<p>这是一个和Heterogeneous Domain Generalization和Open-set Recognition都有关的一个问题，难度可想而知。</p>
+</blockquote>
+<h2 id="评价基准"><a href="#评价基准" class="headerlink" title="评价基准"></a>评价基准</h2><h3 id="持续领域泛化学习（Incremental-Learning-Domain-Generalization）"><a href="#持续领域泛化学习（Incremental-Learning-Domain-Generalization）" class="headerlink" title="持续领域泛化学习（Incremental Learning + Domain Generalization）"></a>持续领域泛化学习（Incremental Learning + Domain Generalization）</h3><p>以往领域泛化的工作利用到的训练数据是固定的，不会发生变化，但是在实际场景中，训练数据可能是动态到来的，这个时候，就需要针对源域的持续领域泛化学习。但是，有如下3个问题需要解决：1）在新到来的数据上，怎样fine-tune模型，而不是重新训练一遍？2）怎样避免灾难性遗忘以及过拟合新数据？3）怎样判断新数据对模型泛化性能的影响，有益还是有害？</p>
+<blockquote>
+<p>我认为这是一个很有意义的方向，如果能有一个好的方案，将有很大的现实意义，值得关注！</p>
+</blockquote>
+<h3 id="异质域变化（Heterogeneous-Domain-Shift）"><a href="#异质域变化（Heterogeneous-Domain-Shift）" class="headerlink" title="异质域变化（Heterogeneous Domain Shift）"></a>异质域变化（Heterogeneous Domain Shift）</h3><p>当前领域泛化相关的工作，源域和目标域高度相关，比如只是一些颜色反转、图像旋转之类的，很少考虑到异构变化，比如源域数据是物体的照片、油画和简笔画，但是目标域却是新视角下的图片。</p>
+<blockquote>
+<p>这个设定虽然很难，但却对现实应用很有意义。</p>
+</blockquote>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://ui.adsabs.harvard.edu/abs/2021arXiv210302503Z/abstract#:~:text=%EE%80%80Domain%20Generalization%20in%20Vision%3A%20A%20Survey%EE%80%81.%20%EE%80%80Generalization%EE%80%81%20to,often%20violated%20in%20practice%20due%20to%20%EE%80%80domain%EE%80%81%20shift.">Domain Generalization in Vision: A Survey</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://iclr.cc/virtual/2021/spotlight/3479">Tent: Fully Test-Time Adaptation by Entropy Minimization</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://openreview.net/forum?id=UH-cmocLJC">How Neural Networks Extrapolate: From Feedforward to Graph Neural Networks</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.nature.com/articles/s42256-020-00257-z#:~:text=Fig.%201%3A%20Examples%20of%20shortcut%20learning.%20Deep%20neural,pattern%20can%20be%20observed%20in%20many%20real-world%20applications.">Shortcut Learning in Deep Neural Networks</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Tech/">Tech</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Tech/DL/">DL</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Tech/DL/DG/">DG</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/paper/">paper</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/30/PR-Adaptive-Methods-Real-World-DG/">
+                        <span class="hidden-mobile">(Paper Reading) Adaptive Methods for Real-World Domain Generalization</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      var light = 'github-light';
+      var dark = 'github-dark';
+      var schema = document.documentElement.getAttribute('data-user-color-scheme');
+      if (schema === 'dark') {
+        schema = dark;
+      } else {
+        schema = light;
+      }
+      window.UtterancesThemeLight = light;
+      window.UtterancesThemeDark = dark;
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.setAttribute('repo', 'MoonJian/commit-utterance');
+      s.setAttribute('issue-term', 'title');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', schema);
+      s.setAttribute('crossorigin', 'anonymous');
+      document.getElementById('comments').appendChild(s);
+    })
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+  <!-- 备案信息 -->
+  <div class="beian">
+    <span>
+      <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+        苏ICP备19046742号
+      </a>
+    </span>
+    
+      
+        <span>
+          <a
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=19046742"
+            rel="nofollow noopener"
+            class="beian-police"
+            target="_blank"
+          >
+            
+            <span>苏公网安备19046742号</span>
+          </a>
+        </span>
+      
+    
+  </div>
+
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
