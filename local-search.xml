@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>(Paper-Reading) A Comprehensive Analysis of Deep Regression</title>
+    <link href="/2022/04/04/Survey-Deep-Regression/"/>
+    <url>/2022/04/04/Survey-Deep-Regression/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><ul><li>Regression could also be formulated as classification, why should we dig into this topic?</li></ul><p>First, there is an inherent trade-off between the complexity of the optimization problem and the accuracy of the method due to the discretization process.</p><p>Second, in absence of a specific formulation, a confusion between two classes has the same cost independently of the corresponding error in the target space.</p><p>Last, the discretization method that is employed must be designed specifically for each task, and therefore general-purpose methodologies must be used with care.</p><p>Thus, we should have a generic vanilla deep regression.</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>(Paper Reading) Future Research Directions on Domain Generalization</title>
     <link href="/2022/01/05/PR-Domain-Generalization-Future-Directions/"/>
     <url>/2022/01/05/PR-Domain-Generalization-Future-Directions/</url>
