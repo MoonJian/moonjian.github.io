@@ -16,15 +16,15 @@
   <meta name="description" content="">
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
-  <meta name="description" content="22 - 3 - 23: Linux上gcc版本更替 编译安装升级&#x2F;降级gcc的版本还是挺麻烦的   22 - 3 - 9: 函数指针浅析一 函数指针浅析二 函数指针是cpp里一个复杂的概念，这两篇博客做了一个入门级别的讲解   22 - 2 - 17: Parquet-一种不同于csv的数据存储类型 相比csv文件存储格式，Parquet是基于列存储的，所需空间更少，加载的更快（因为无关的列不">
+  <meta name="description" content="22 - 4 - 9: 如何通过Meta Learning实现域泛化 (Domain Generalization)?  核心目的是提高泛化能力，介绍了naive的meta-learning方法、BN自适应、利用语义信息和域对其等四种方法。   22 - 4 - 9: 人生的ABZ计划  A计划：在能力范围内且能带来稳定收入的事情，比如工作；B计划：爱好或者副业，值得长期投入并且有朝一日能成为A">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Daily">
 <meta property="og:url" content="http://example.com/daily/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="22 - 3 - 23: Linux上gcc版本更替 编译安装升级&#x2F;降级gcc的版本还是挺麻烦的   22 - 3 - 9: 函数指针浅析一 函数指针浅析二 函数指针是cpp里一个复杂的概念，这两篇博客做了一个入门级别的讲解   22 - 2 - 17: Parquet-一种不同于csv的数据存储类型 相比csv文件存储格式，Parquet是基于列存储的，所需空间更少，加载的更快（因为无关的列不">
+<meta property="og:description" content="22 - 4 - 9: 如何通过Meta Learning实现域泛化 (Domain Generalization)?  核心目的是提高泛化能力，介绍了naive的meta-learning方法、BN自适应、利用语义信息和域对其等四种方法。   22 - 4 - 9: 人生的ABZ计划  A计划：在能力范围内且能带来稳定收入的事情，比如工作；B计划：爱好或者副业，值得长期投入并且有朝一日能成为A">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-03T12:28:17.000Z">
-<meta property="article:modified_time" content="2022-03-23T07:58:57.005Z">
+<meta property="article:modified_time" content="2022-04-09T07:24:30.803Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -236,23 +236,53 @@
 
 <article class="page-content">
   <ul>
-<li>22 - 3 - 23: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/aquester/p/10799125.html">Linux上gcc版本更替</a><blockquote>
+<li><p>22 - 4 - 9: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/o1liWf9B4_LntBeyV2bVOg">如何通过Meta Learning实现域泛化 (Domain Generalization)?</a></p>
+<blockquote>
+<p>核心目的是提高泛化能力，介绍了naive的meta-learning方法、BN自适应、利用语义信息和域对其等四种方法。</p>
+</blockquote>
+</li>
+<li><p>22 - 4 - 9: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/LPGRzGvK9sWM3VuabaoZXg">人生的ABZ计划</a></p>
+<blockquote>
+<p>A计划：在能力范围内且能带来稳定收入的事情，比如工作；B计划：爱好或者副业，值得长期投入并且有朝一日能成为A计划的事情，比如投资；Z计划：退路，非劳动收益，被裁员的后能撑住一段时间。</p>
+</blockquote>
+</li>
+<li><p>22 - 4 - 9: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/v6XsC-jyOeF9c90_XZIyzg">提高训练效率的炼丹方法</a></p>
+<blockquote>
+<p>“一种理解计算的方式是把它想象成工厂。我们把指令传达给我们的工厂（额外消耗），把原始材料送给它（内存带宽），所有这些都是为了让工厂运行得更加高效（计算）。” GPU带宽是一个影响训练时间的重要因素，数据在DRAM和SRAM之间的交互可能很占时间！</p>
+</blockquote>
+</li>
+<li><p>22 - 4 - 9: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/njl6nuid0aalZdH5tuDpqQ">一文秒杀 5 道最近公共祖先问题</a></p>
+<blockquote>
+<p>东哥出品，必属精品！</p>
+</blockquote>
+</li>
+<li><p>22 - 4 - 6: <a target="_blank" rel="noopener" href="https://juejin.cn/post/6964785027838115854">C++ 之头文件声明定义</a></p>
+<blockquote>
+<p>没想到c++里面的extern、头文件与声明定义之间的关系这么复杂，读后收获：1. 一个变量只能定义一次！2. <code>extern int a=1;</code> 是定义，不能在头文件中这么写 3. 头文件只负责声明，定义的事情交给.cpp文件来做，在链接的时候总能找到的！（这个博客及其参考资料建议多读几遍）</p>
+</blockquote>
+</li>
+<li><p>22 - 3 - 23: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/aquester/p/10799125.html">Linux上gcc版本更替</a></p>
+<blockquote>
 <p>编译安装升级/降级gcc的版本还是挺麻烦的</p>
 </blockquote>
 </li>
-<li>22 - 3 - 9: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/AnnieKim/archive/2011/11/20/2255813.html">函数指针浅析一</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/AnnieKim/archive/2011/12/04/2275589.html">函数指针浅析二</a><blockquote>
+<li><p>22 - 3 - 9: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/AnnieKim/archive/2011/11/20/2255813.html">函数指针浅析一</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/AnnieKim/archive/2011/12/04/2275589.html">函数指针浅析二</a></p>
+<blockquote>
 <p>函数指针是cpp里一个复杂的概念，这两篇博客做了一个入门级别的讲解</p>
 </blockquote>
 </li>
-<li>22 - 2 - 17: <a target="_blank" rel="noopener" href="https://databricks.com/glossary/what-is-parquet">Parquet-一种不同于csv的数据存储类型</a><blockquote>
+<li><p>22 - 2 - 17: <a target="_blank" rel="noopener" href="https://databricks.com/glossary/what-is-parquet">Parquet-一种不同于csv的数据存储类型</a></p>
+<blockquote>
 <p>相比csv文件存储格式，Parquet是基于列存储的，所需空间更少，加载的更快（因为无关的列不需要加载到内存中）</p>
 </blockquote>
 </li>
-<li>21 - 11 - 9: <a target="_blank" rel="noopener" href="https://www.cxyzjd.com/article/qcy1026/100887609">Ubuntu降低内核到指定版本</a><blockquote>
+<li><p>21 - 11 - 9: <a target="_blank" rel="noopener" href="https://www.cxyzjd.com/article/qcy1026/100887609">Ubuntu降低内核到指定版本</a></p>
+<blockquote>
 <p>Ubuntu重启后内核会自动更新，可能导致依赖冲突，这时就需要内核回退</p>
 </blockquote>
 </li>
-<li>21 - 11 - 9: <a target="_blank" rel="noopener" href="https://askubuntu.com/questions/110118/gpg-error-while-updating">GPG error while updating</a> || <a target="_blank" rel="noopener" href="https://ubuntuforums.org/showthread.php?t=2035793">Update and software install failure</a><blockquote>
+<li><p>21 - 11 - 9: <a target="_blank" rel="noopener" href="https://askubuntu.com/questions/110118/gpg-error-while-updating">GPG error while updating</a> || <a target="_blank" rel="noopener" href="https://ubuntuforums.org/showthread.php?t=2035793">Update and software install failure</a></p>
+<blockquote>
 <p>内核更新的bug，最开始还以为是ubuntu-keyring这个安装包的依赖问题，最后发现是gpg认证的问题，要看报错！  </p>
 </blockquote>
 </li>
